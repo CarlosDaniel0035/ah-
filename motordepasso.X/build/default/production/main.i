@@ -2540,6 +2540,7 @@ void main (void)
 {
 
     int estado = 0;
+    motorpasso_init();
 
     while( 1 )
     {
@@ -2555,17 +2556,21 @@ void main (void)
                     estado = 3;
                 break;
             case 2:
-                motorpasso_init();
+
                 motorpasso(48, 100);
                 if (PORTDbits.RD1 ==1)
-                estado = 1;
+                    estado = 4;
                 break;
             case 3:
-                motorpasso_init();
                 motorantpasso(48, 100);
                 if (PORTDbits.RD1 == 1)
-                estado = 1;
+                    estado = 4;
                 break;
+            case 4:
+                if(PORTDbits.RD1 == 0)
+                    estado = 1;
+                break;
+
         }
     }
     return;

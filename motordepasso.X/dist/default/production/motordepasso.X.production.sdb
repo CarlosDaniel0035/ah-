@@ -23,7 +23,7 @@
 [v _motorantpasso motorantpasso `(v  1 e 1 0 ]
 "352 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic16f887.h
 [v _PORTD PORTD `VEuc  1 e 1 @8 ]
-[s S30 . 1 `uc 1 RD0 1 0 :1:0 
+[s S34 . 1 `uc 1 RD0 1 0 :1:0 
 `uc 1 RD1 1 0 :1:1 
 `uc 1 RD2 1 0 :1:2 
 `uc 1 RD3 1 0 :1:3 
@@ -33,8 +33,8 @@
 `uc 1 RD7 1 0 :1:7 
 ]
 "369
-[u S39 . 1 `S30 1 . 1 0 ]
-[v _PORTDbits PORTDbits `VES39  1 e 1 @8 ]
+[u S43 . 1 `S34 1 . 1 0 ]
+[v _PORTDbits PORTDbits `VES43  1 e 1 @8 ]
 [s S81 . 1 `uc 1 TRISD0 1 0 :1:0 
 `uc 1 TRISD1 1 0 :1:1 
 `uc 1 TRISD2 1 0 :1:2 
@@ -60,7 +60,7 @@
 {
 "12
 [v main@estado estado `i  1 a 2 8 ]
-"42
+"47
 } 0
 "6 C:\Users\20185070\MPLABXProjects\MotordePassos\motordepasso.X\motorpasso.c
 [v _motorpasso_init motorpasso_init `(v  1 e 1 0 ]
