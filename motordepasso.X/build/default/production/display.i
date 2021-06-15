@@ -1,4 +1,4 @@
-# 1 "main.c"
+# 1 "display.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,7 +6,30 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "main.c" 2
+# 1 "display.c" 2
+# 21 "display.c"
+# 1 "./config.h" 1
+
+
+
+
+
+#pragma config FOSC = INTRC_NOCLKOUT
+#pragma config WDTE = OFF
+#pragma config PWRTE = OFF
+#pragma config MCLRE = OFF
+#pragma config CP = OFF
+#pragma config CPD = OFF
+#pragma config BOREN = OFF
+#pragma config IESO = OFF
+#pragma config FCMEN = OFF
+#pragma config LVP = OFF
+
+
+#pragma config BOR4V = BOR40V
+#pragma config WRT = OFF
+# 21 "display.c" 2
+
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2629,114 +2652,159 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\xc.h" 2 3
-# 1 "main.c" 2
-
-# 1 "./config.h" 1
-
-
-
-
-
-#pragma config FOSC = INTRC_NOCLKOUT
-#pragma config WDTE = OFF
-#pragma config PWRTE = OFF
-#pragma config MCLRE = OFF
-#pragma config CP = OFF
-#pragma config CPD = OFF
-#pragma config BOREN = OFF
-#pragma config IESO = OFF
-#pragma config FCMEN = OFF
-#pragma config LVP = OFF
-
-
-#pragma config BOR4V = BOR40V
-#pragma config WRT = OFF
-# 2 "main.c" 2
-
-# 1 "./motorpasso.h" 1
-
-
-
-void motorpasso_init ( void );
-void motorpasso (int numpassos, int t);
-void motorantpasso (int numpassos, int t);
-void botoes_init (void);
-void motormeiopasso (int numpaassos, int t);
-# 3 "main.c" 2
+# 22 "display.c" 2
 
 # 1 "./delay.h" 1
 
 
 
 void delay(unsigned int t );
-# 4 "main.c" 2
-
-# 1 "./display.h" 1
-
-
-
-void dispLCD_instReg( unsigned char i );
-
-void dispLCD_dataReg( unsigned char d );
-
-void dispLCD_lincol( unsigned char lin, unsigned char col);
-
-void dispLCD_init( void );
-
-void dispLCD( unsigned char lin, unsigned char col, const char * str );
-
-void dispLCD_num( unsigned char lin, unsigned char col, int num, unsigned char tam );
-
-void dispLCD_clr( void );
-# 5 "main.c" 2
-
-
-
-
-
-
-
-void main (void)
+# 23 "display.c" 2
+# 33 "display.c"
+typedef union
 {
-
-    int estado = 0;
-    motorpasso_init();
-
-    while( 1 )
+    struct
     {
-        switch(estado)
-        {
-            case 0:
-                estado = 1;
-                break;
-            case 1:
-                if (PORTDbits.RD0 == 1)
-                    estado = 2;
-                if (PORTDbits.RD1 == 1)
-                    estado = 3;
-                if (PORTDbits.RD2 == 1)
-                    estado = 5;
-                break;
-            case 2:
+        unsigned char :2;
+        unsigned char RS :1;
+        unsigned char EN :1;
+        unsigned char BUS :4;
+    };
+} LCDbits_t;
 
-                motorpasso(48, 100);
-                if (PORTDbits.RD1 ==1)
-                    estado = 4;
-                break;
-            case 3:
-                motorantpasso(48, 100);
-                if (PORTDbits.RD1 == 1)
-                    estado = 4;
-                break;
-            case 4:
-                if(PORTDbits.RD1 == 0)
-                    estado = 1;
-                break;
-            case 5:
-                motormeiopasso(30, 1000);
-                break;
+volatile LCDbits_t LCDbits __attribute__((address(0x008)));
+# 87 "display.c"
+void dispLCD_instReg( unsigned char i )
+{
+    LCDbits.RS = 0;
+    LCDbits.BUS = (i>>4);
 
-        }
+    LCDbits.EN = 0;
+    if( i == 0x01 || i == 0x02 )
+        _delay((unsigned long)((2)*(4000000/4000.0)));
+    else
+        _delay((unsigned long)((40)*(4000000/4000000.0)));
+    LCDbits.EN = 1;
+
+
+    if( (i & 0xF0) == (0x20 | 0x00) )
+    {
+        LCDbits.RS = 0;
+        LCDbits.BUS = i>>4;
+        LCDbits.EN = 0;
+        _delay((unsigned long)((40)*(4000000/4000000.0)));
+        LCDbits.EN = 1;
     }
-    return;
+
+    LCDbits.RS = 0;
+    LCDbits.BUS = i & 0x0F;
+    LCDbits.EN = 0;
+    if( i == 0x01 || i == 0x02 )
+        _delay((unsigned long)((2)*(4000000/4000.0)));
+    else
+        _delay((unsigned long)((40)*(4000000/4000000.0)));
+    LCDbits.EN = 1;
+}
+
+
+void dispLCD_dataReg( unsigned char d )
+{
+    LCDbits.RS = 1;
+    LCDbits.BUS = d >> 4;
+    LCDbits.EN = 0;
+    _delay((unsigned long)((40)*(4000000/4000000.0)));
+    LCDbits.EN = 1;
+
+    LCDbits.RS = 1;
+    LCDbits.BUS = d & 0x0F;
+    LCDbits.EN = 0;
+    _delay((unsigned long)((40)*(4000000/4000000.0)));
+    LCDbits.EN = 1;
+}
+
+
+void dispLCD_lincol( unsigned char lin, unsigned char col)
+{
+    dispLCD_instReg( (0x80+((0x40 * lin) + (col + 0x00) & 0x7F)) );
+}
+
+
+void dispLCD_init( void )
+{
+    TRISBbits.TRISB2 = 0;
+    TRISBbits.TRISB3 = 0;
+
+    TRISBbits.TRISB4 = 0;
+    TRISBbits.TRISB5 = 0;
+    TRISBbits.TRISB6 = 0;
+    TRISBbits.TRISB7 = 0;
+
+    LCDbits.EN = 1;
+    dispLCD_instReg( 0x20|0x00|0x08);
+    dispLCD_instReg( 0x08|0x04|0x00|0x00 );
+    dispLCD_instReg( 0x01 );
+    dispLCD_instReg( 0x02 );
+}
+
+
+void dispLCD( unsigned char lin, unsigned char col, const char * str )
+{
+    char pos = col;
+    dispLCD_lincol( lin, col );
+
+    while( *str )
+    {
+        dispLCD_dataReg( *str );
+        ++str;
+        ++pos;
+    }
+}
+
+
+void dispLCD_num( unsigned char lin, unsigned char col,
+                    int num, unsigned char tam )
+{
+    int div;
+    unsigned char size;
+    char sinal;
+
+    sinal = num < 0;
+    if( sinal )
+        num = (~num) + 1;
+
+    dispLCD_lincol(lin, col);
+
+    div=10000;
+    size = 5;
+    while( div >= 1 )
+    {
+        if( num/div == 0 )
+            --size;
+        else
+            break;
+        div/=10;
+    }
+
+    while( tam > (size+sinal) && tam > 1 )
+    {
+        dispLCD_dataReg(' ');
+        --tam;
+    }
+
+    if( sinal )
+        dispLCD_dataReg('-');
+
+    do
+    {
+        dispLCD_dataReg( (num / div) + '0' );
+        num = num % div;
+        div/=10;
+    }
+    while( div >= 1 );
+}
+
+
+void dispLCD_clr( void )
+{
+    dispLCD_instReg(0x01);
 }

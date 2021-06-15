@@ -19,12 +19,14 @@ void botoes_init (void)
 {
     TRISDbits.TRISD0 = 0;
     TRISDbits.TRISD1 = 0;
+    TRISDbits.TRISD2 = 0;
+    PORTDbits.RD2 = 0;
     PORTDbits.RD0 = 0;
     PORTDbits.RD1 = 0;
 }
 
 
-char passos[4] = {0x40, 0x80, 0x10, 0x20};
+char passos[4] = {0x40, 0x80, 0x10, 0x20}; 
 
 int passoatual = 0;
 char numpassos = 4;
@@ -50,6 +52,20 @@ void motorantpasso (int qtdpassos, int t)
     for ( passoagora=0; passoagora<qtdpassos; passoagora++ )
     {
         PORTD = passo[passoagora % 4];
+        delay(t);
+    }
+}
+char passoos[9] = {0x40, 0xC0, 0x80, 0x90, 0x10, 0x30, 0x20, 0x60};
+
+int passoatuaal = 0;
+char numpaassos = 9;
+
+void motormeiopasso (int numpaassos, int t)
+{
+    
+    for ( passoatuaal=0; passoatuaal<numpaassos; passoatuaal++ )
+    {
+        PORTD = passoos[passoatuaal % 8];
         delay(t);
     }
 }

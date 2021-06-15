@@ -1,27 +1,39 @@
-[p LITE_MODE AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PICREGULAR PICMID ]
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PICREGULAR PICMID ]
 [d version 1.1 ]
 [d edition pro ]
 [d chip 16F887 ]
-[d frameptr 6 ]
-"10 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c90\common\sprcadd.c
+[d frameptr 0 ]
+"5 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+"5 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+"10 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
-"4 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c90\common\Umul8_16.c
+"4 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\Umul8_16.c
 [v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
-"6 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c90\pic\__eeprom.c
+"6 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\pic\__eeprom.c
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"4 C:\Users\20185070\MPLABXProjects\MotordePassos\motordepasso.X\delay.c
+"4 C:\Users\Danie\MPLABXProjects\MotordePassos\motordepasso.X\delay.c
 [v _delay delay `(v  1 e 1 0 ]
-"9 C:\Users\20185070\MPLABXProjects\MotordePassos\motordepasso.X\main.c
+"87 C:\Users\Danie\MPLABXProjects\MotordePassos\motordepasso.X\display.c
+[v _dispLCD_instReg dispLCD_instReg `(v  1 e 1 0 ]
+"120
+[v _dispLCD_dataReg dispLCD_dataReg `(v  1 e 1 0 ]
+"136
+[v _dispLCD_lincol dispLCD_lincol `(v  1 e 1 0 ]
+"12 C:\Users\Danie\MPLABXProjects\MotordePassos\motordepasso.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"6 C:\Users\20185070\MPLABXProjects\MotordePassos\motordepasso.X\motorpasso.c
+"6 C:\Users\Danie\MPLABXProjects\MotordePassos\motordepasso.X\motorpasso.c
 [v _motorpasso_init motorpasso_init `(v  1 e 1 0 ]
-"32
+"34
 [v _motorpasso motorpasso `(v  1 e 1 0 ]
-"47
+"49
 [v _motorantpasso motorantpasso `(v  1 e 1 0 ]
-"352 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic16f887.h
+"63
+[v _motormeiopasso motormeiopasso `(v  1 e 1 0 ]
+"353 C:\Program Files\Microchip\xc8\v2.31\pic\include\proc\pic16f887.h
 [v _PORTD PORTD `VEuc  1 e 1 @8 ]
 [s S34 . 1 `uc 1 RD0 1 0 :1:0 
 `uc 1 RD1 1 0 :1:1 
@@ -32,10 +44,22 @@
 `uc 1 RD6 1 0 :1:6 
 `uc 1 RD7 1 0 :1:7 
 ]
-"369
+"370
 [u S43 . 1 `S34 1 . 1 0 ]
 [v _PORTDbits PORTDbits `VES43  1 e 1 @8 ]
-[s S81 . 1 `uc 1 TRISD0 1 0 :1:0 
+[s S160 . 1 `uc 1 TRISB0 1 0 :1:0 
+`uc 1 TRISB1 1 0 :1:1 
+`uc 1 TRISB2 1 0 :1:2 
+`uc 1 TRISB3 1 0 :1:3 
+`uc 1 TRISB4 1 0 :1:4 
+`uc 1 TRISB5 1 0 :1:5 
+`uc 1 TRISB6 1 0 :1:6 
+`uc 1 TRISB7 1 0 :1:7 
+]
+"1496
+[u S169 . 1 `S160 1 . 1 0 ]
+[v _TRISBbits TRISBbits `VES169  1 e 1 @134 ]
+[s S87 . 1 `uc 1 TRISD0 1 0 :1:0 
 `uc 1 TRISD1 1 0 :1:1 
 `uc 1 TRISD2 1 0 :1:2 
 `uc 1 TRISD3 1 0 :1:3 
@@ -44,44 +68,63 @@
 `uc 1 TRISD6 1 0 :1:6 
 `uc 1 TRISD7 1 0 :1:7 
 ]
-"1619
-[u S90 . 1 `S81 1 . 1 0 ]
-[v _TRISDbits TRISDbits `VES90  1 e 1 @136 ]
-"27 C:\Users\20185070\MPLABXProjects\MotordePassos\motordepasso.X\motorpasso.c
+"1620
+[u S96 . 1 `S87 1 . 1 0 ]
+[v _TRISDbits TRISDbits `VES96  1 e 1 @136 ]
+[s S151 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 RS 1 0 :1:2 
+`uc 1 EN 1 0 :1:3 
+`uc 1 BUS 1 0 :4:4 
+]
+"44 C:\Users\Danie\MPLABXProjects\MotordePassos\motordepasso.X\display.c
+[u S156 . 1 `S151 1 . 1 0 ]
+[v _LCDbits LCDbits `VES156  1 e 1 @8 ]
+"29 C:\Users\Danie\MPLABXProjects\MotordePassos\motordepasso.X\motorpasso.c
 [v _passos passos `[4]uc  1 e 4 0 ]
-"29
+"31
 [v _passoatual passoatual `i  1 e 2 0 ]
-"42
-[v _passo passo `[4]uc  1 e 4 0 ]
 "44
+[v _passo passo `[4]uc  1 e 4 0 ]
+"46
 [v _passoagora passoagora `i  1 e 2 0 ]
-"9 C:\Users\20185070\MPLABXProjects\MotordePassos\motordepasso.X\main.c
+"58
+[v _passoos passoos `[9]uc  1 e 9 0 ]
+"60
+[v _passoatuaal passoatuaal `i  1 e 2 0 ]
+"12 C:\Users\Danie\MPLABXProjects\MotordePassos\motordepasso.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"12
+"15
 [v main@estado estado `i  1 a 2 8 ]
-"47
+"55
 } 0
-"6 C:\Users\20185070\MPLABXProjects\MotordePassos\motordepasso.X\motorpasso.c
+"6 C:\Users\Danie\MPLABXProjects\MotordePassos\motordepasso.X\motorpasso.c
 [v _motorpasso_init motorpasso_init `(v  1 e 1 0 ]
 {
 "16
 } 0
-"32
+"34
 [v _motorpasso motorpasso `(v  1 e 1 0 ]
 {
 [v motorpasso@numpassos numpassos `i  1 p 2 3 ]
 [v motorpasso@t t `i  1 p 2 5 ]
-"40
+"42
 } 0
-"47
+"63
+[v _motormeiopasso motormeiopasso `(v  1 e 1 0 ]
+{
+[v motormeiopasso@numpaassos numpaassos `i  1 p 2 3 ]
+[v motormeiopasso@t t `i  1 p 2 5 ]
+"71
+} 0
+"49
 [v _motorantpasso motorantpasso `(v  1 e 1 0 ]
 {
 [v motorantpasso@qtdpassos qtdpassos `i  1 p 2 3 ]
 [v motorantpasso@t t `i  1 p 2 5 ]
-"55
+"57
 } 0
-"4 C:\Users\20185070\MPLABXProjects\MotordePassos\motordepasso.X\delay.c
+"4 C:\Users\Danie\MPLABXProjects\MotordePassos\motordepasso.X\delay.c
 [v _delay delay `(v  1 e 1 0 ]
 {
 [v delay@t t `ui  1 p 2 0 ]

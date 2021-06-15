@@ -5,5 +5,6 @@ void motorpasso_init ( void );
 void motorpasso (int numpassos, int t);
 void motorantpasso (int numpassos, int t);
 void botoes_init (void);
+void motormeiopasso (int numpaassos, int t);
 
 #endif
